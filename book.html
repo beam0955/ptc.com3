@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <link rel="shortcut icon" href="images/favicon.png" type="">
+
+  <title> com.3 </title>
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+
+  <!--owl slider stylesheet -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+  <!-- nice select  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ==" crossorigin="anonymous" />
+  <!-- font awesome style -->
+  <link href="css/font-awesome.min.css" rel="stylesheet" />
+        
+  <!-- Custom styles for this template -->
+  <link href="css/style.css" rel="stylesheet" />
+  <!-- responsive style -->
+    
+  <link href="css/responsive.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>การเปรียบเทียบสมาร์ทโฟน</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #111;
+            color: #ffcc00;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 900px;
+        }
+        .card {
+            background: #222;
+            border-radius: 15px;
+            transition: transform 0.3s;
+            color: #ffcc00;
+            padding: 15px;
+            text-align: center;
+        }
+        .card:hover {
+            transform: scale(1.03);
+        }
+        .btn-primary {
+            background-color: #ffcc00;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            color: #111;
+        }
+        .btn-primary:hover {
+            background-color: #ffaa00;
+        }
+        .btn-danger {
+            background-color: #cc0000;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            color: white;
+        }
+        .btn-danger:hover {
+            background-color: #990000;
+        }
+        .comparison-table {
+            background: #222;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(255, 204, 0, 0.3);
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #ffcc00;
+            padding: 12px;
+            text-align: center;
+        }
+        .comparison-table th {
+            background-color: #333;
+            color: #ffcc00;
+        }
+        .product-img {
+            width: 100px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">เปรียบเทียบสมาร์ทโฟน</h2>
+        <p class="text-center mb-4">เปรียบเทียบสมาร์ทโฟนสำหรับที่มีอยู่ภายในเว็ปไซต์</p>
+        <div class="input-group mb-3">
+            <input type="text" id="searchBox" class="form-control" placeholder="Search for a smartphone...">
+        </div>
+        <div id="results" class="row"></div>
+        <div id="comparison" class="comparison-table">
+            <h4>Comparison</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Phone 1</th>
+                        <th>Phone 2</th>
+                    </tr>
+                </thead>
+                <tbody id="comparisonBody"></tbody>
+            </table>
+            <button class="btn btn-danger mt-3" onclick="removeComparison()">Clear Comparison</button>
+           
+        </div>
+    </div>
+
+    <script>
+        let phones = [
+             // หมวดหมู่: เริ่มต้น
+            { name: "Xiaomi Redmi A3", price: 2699, cpu: "MediaTek Helio G36", ram: "3GB/64GB", battery: "5,000mAh", image: "images/A3.png", screen: "6.7 นิ้ว 1650x720", link: "https://www.mi.com/global/product/redmi-a3/" },
+            { name: "Xiaomi Redmi A1", price: 2999, cpu: "MediaTek Helio A22", ram: "2GB/32GB", battery: "5,000mAh", image: "images/A1.png", screen: "6.52 นิ้ว 1600x720", link: "https://www.mi.com/global/product/redmi-a1/" },
+            { name: "Realme Narzo 50i Prime", price: 2890, cpu: "Unisoc T612", ram: "3GB/32GB", battery: "5000mAh", image: "images/Narzo50i.png", screen: "6.5 นิ้ว 1600x720", link: "https://www.realme.com/global/narzo-50i-prime" },
+            { name: "Infinix Smart 6", price: 2990, cpu: "Unisoc SC9863A", ram: "2GB/32GB", battery: "5000mAh", image: "images/Smart6.png", screen: "6.6 นิ้ว 1600x720", link: "https://www.infinixmobility.com/smart6" },
+            { name: "ITEL S23 4G", price: 2999, cpu: "Unisoc T606", ram: "4GB/64GB", battery: "5000mAh", image: "images/ITELS23.png", screen: "6.6 นิ้ว 1600x720", link: "https://www.itel-mobile.com" },
+            { name: "Samsung Galaxy A03", price: 3999, cpu: "Unisoc T606", ram: "3GB/32GB", battery: "5000mAh", image: "images/A03.png", screen: "6.5 นิ้ว PLS LCD", link: "https://www.samsung.com" },
+            { name: "Motorola Moto E 2020", price: 3999, cpu: "Qualcomm Snapdragon 632", ram: "2GB/32GB", battery: "3550mAh", image: "images/MotoE.png", screen: "6.2 นิ้ว HD+", link: "https://www.motorola.com" },
+            { name: "Nokia C01 Plus", price: 3499, cpu: "Unisoc SC9863A", ram: "1GB/16GB", battery: "3000mAh", image: "images/NokiaC01.png", screen: "5.45 นิ้ว 1440x720", link: "https://www.nokia.com" },
+
+            // หมวดหมู่: ใช้งานทั่วไป
+            { name: "OPPO A3 Pro 5G", price: 7999, cpu: "MediaTek Dimensity 6300", ram: "6GB/128GB", battery: "5,100mAh", image: "images/A3Pro.png", screen: "6.67 นิ้ว 120Hz", link: "https://www.oppo.com/th/smartphones/series-a/a3-pro-5g/" },
+            { name: "nubia Focus Pro 5G", price: 7499, cpu: "Unisoc T760", ram: "8GB/128GB", battery: "5,000mAh", image: "images/FocusPro.png", screen: "6.72 นิ้ว 120Hz", link: "https://www.nubia.com/en/product/nubia-focus-pro-5g/" },
+            { name: "iQOO Z9x 5G", price: 7999, cpu: "Snapdragon 6 Gen 2", ram: "8GB/128GB", battery: "5,000mAh", image: "images/Z9x.png", screen: "6.67 นิ้ว 120Hz", link: "https://www.iqoo.com/global/product/z9x-5g/" },
+            { name: "HONOR X8b", price: 7999, cpu: "Qualcomm Snapdragon 680", ram: "6GB/128GB", battery: "4,000mAh", image: "images/HonorX8b.png", screen: "6.7 นิ้ว 120Hz", link: "https://www.hihonor.com" },
+            { name: "Vivo Y33s", price: 7999, cpu: "MediaTek Helio G80", ram: "8GB/128GB", battery: "5000mAh", image: "images/Y33s.png", screen: "6.58 นิ้ว FHD+", link: "https://www.vivo.com" },
+            { name: "Redmi Note 10", price: 7499, cpu: "Qualcomm Snapdragon 678", ram: "4GB/64GB", battery: "48MP + 8MP + 2MP + 2MP", image: "images/RedmiNote10.png", screen: "6.43 นิ้ว AMOLED", link: "https://www.mi.com" },
+            { name: "Samsung Galaxy A12", price: 7790, cpu: "Exynos 850", ram: "4GB/64GB", battery: "5000mAh", image: "images/A12.png", screen: "6.5 นิ้ว PLS TFT", link: "https://www.samsung.com" },
+            { name: "Realme 7i", price: 7499, cpu: "Qualcomm Snapdragon 662", ram: "4GB/128GB", battery: "5000mAh", image: "images/Realme7i.png", screen: "6.5 นิ้ว IPS LCD", link: "https://www.realme.com" },
+
+            // หมวดหมู่: รองเรือธง
+            { name: "Realme GT 2", price: 15999, cpu: "Qualcomm Snapdragon 870", ram: "8GB/128GB", battery: "4,500mAh", image: "images/GT2.png", screen: "6.62 นิ้ว AMOLED, 120Hz", link: "https://www.realme.com" },
+            { name: "Xiaomi Mi 10T Pro", price: 16990, cpu: "Qualcomm Snapdragon 865", ram: "8GB/128GB", battery: "5,000mAh", image: "images/Mi10TPro.png", screen: "6.67 นิ้ว LCD 144Hz", link: "https://www.mi.com" },
+            { name: "OnePlus Nord 2T", price: 17999, cpu: "MediaTek Dimensity 1300", ram: "8GB/128GB", battery: "4,500mAh", image: "images/Nord2T.png", screen: "6.43 นิ้ว AMOLED, 90Hz", link: "https://www.oneplus.com" },
+            { name: "iQOO Neo 6", price: 18999, cpu: "Qualcomm Snapdragon 870", ram: "8GB/128GB", battery: "4,700mAh", image: "images/Neo6.png", screen: "6.62 นิ้ว AMOLED, 120Hz", link: "https://www.iqoo.com" },
+            { name: "OPPO Reno6 Pro 5G", price: 17990, cpu: "MediaTek Dimensity 1200", ram: "12GB/256GB", battery: "4,500mAh", image: "images/Reno6Pro.png", screen: "6.55 นิ้ว AMOLED, 90Hz", link: "https://www.oppo.com" },
+            { name: "Xiaomi Mi 11 Lite 5G", price: 17990, cpu: "Qualcomm Snapdragon 780G", ram: "8GB/128GB", battery: "4,250mAh", image: "images/Mi11Lite5G.png", screen: "6.55 นิ้ว AMOLED", link: "https://www.mi.com" },
+            { name: "Samsung Galaxy A72", price: 17990, cpu: "Qualcomm Snapdragon 720G", ram: "8GB/128GB", battery: "5,000mAh", image: "images/A72.png", screen: "6.7 นิ้ว Super AMOLED, 90Hz", link: "https://www.samsung.com" },
+            { name: "Realme GT Master Edition", price: 17999, cpu: "Qualcomm Snapdragon 778G", ram: "8GB/128GB", battery: "4,300mAh", image: "images/GTMaster.png", screen: "6.43 นิ้ว Super AMOLED", link: "https://www.realme.com" },
+
+            // หมวดหมู่: ระดับเรือธง
+            { name: "Samsung Galaxy S20 FE 5G", price: 21999, cpu: "Exynos 990", ram: "8GB/128GB", battery: "4,500mAh", image: "images/S20FE.png", screen: "6.5 นิ้ว Super AMOLED, 120Hz", link: "https://www.samsung.com/th/smartphones/galaxy-s20-fe-5g" },
+            { name: "Xiaomi 14 Ultra", price: 35990, cpu: " Snapdragon 8 Gen 3 ", ram: "12GB/256GB", battery: "5,000mAh", image: "images/mi14ul.png", screen: "6.73 นิ้ว LTPO AMOLED, 120Hz", link: "https://www.mi.com/th/product/xiaomi-14-ultra/specs/" },
+            { name: "Xiaomi 13 Pro", price: 25999, cpu: "Qualcomm Snapdragon 8 Gen 2", ram: "12GB/256GB", battery: "4,820mAh", image: "images/Xiaomi13Pro.png", screen: "6.73 นิ้ว AMOLED", link: "https://www.mi.com" },
+            { name: "OnePlus 11", price: 25999, cpu: "Snapdragon 8 Gen 2", ram: "16GB/256GB", battery: "5,000mAh", image: "images/OnePlus11.png", screen: "6.7 นิ้ว AMOLED, 120Hz", link: "https://www.oneplus.com" },
+            { name: "Sony Xperia 1 IV", price: 29999, cpu: "Snapdragon 8 Gen 1", ram: "12GB/256GB", battery: "5,000mAh", image: "images/Xperia1IV.png", screen: "6.5 นิ้ว OLED, 120Hz", link: "https://www.sony.com" },
+            { name: "Samsung Galaxy Z Fold 5", price: 39990, cpu: "Snapdragon 8 Gen 2", ram: "12GB/512GB", battery: "4,400mAh", image: "images/ZFold5.png", screen: "7.6 นิ้ว Dynamic AMOLED", link: "https://www.samsung.com" },
+            { name: "Google Pixel 7 Pro", price: 26999, cpu: "Google Tensor G2", ram: "12GB/128GB", battery: "5,000mAh", image: "images/Pixel7Pro.png", screen: "6.7 นิ้ว LTPO OLED", link: "https://store.google.com" },
+            { name: "Huawei Mate 50 Pro", price: 31999, cpu: "Snapdragon 8 Gen 1", ram: "8GB/256GB", battery: "4,700mAh", image: "images/Mate50Pro.png", screen: "6.74 นิ้ว OLED", link: "https://consumer.huawei.com" }
+        ];
+        let comparisonPhones = [];
+
+        function displayPhones() {
+            let resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = '';
+            phones.forEach(phone => {
+                let card = document.createElement('div');
+                card.classList.add('col-md-4');
+                card.innerHTML = `
+                    <div class="card mb-3">
+                        <img src="${phone.image}" class="product-img mb-2" alt="${phone.name}">
+                        <h5>${phone.name}</h5>
+                        <p><strong>Storage:</strong> ${phone.ram}</p>
+                        <p><strong>Price:</strong> ${phone.price}</p>
+                        <button class="btn btn-primary btn-sm" onclick="comparePhone('${phone.name}', '${phone.ram}', '${phone.price}', '${phone.image}', '${phone.link}', '${phone.battery}', '${phone.screen}')">Compare</button>
+                    </div>
+                `;
+                resultsContainer.appendChild(card);
+            });
+        }
+
+        function comparePhone(name, ram, price, image, link, battery, screen) {
+            if (comparisonPhones.length >= 2) {
+                alert('You can only compare up to 2 phones.');
+                return;
+            }
+            comparisonPhones.push({ name, ram, price, image, link, battery, screen });
+            updateComparisonTable();
+        }
+
+        function updateComparisonTable() {
+            let comparisonBody = document.getElementById('comparisonBody');
+            comparisonBody.innerHTML = '';  // ล้างข้อมูลเก่า
+
+            // แถวหัวตาราง
+            // let headerRow = `
+            //     <tr>
+            //         <th>Feature</th>
+            //         <th>Phone 1</th>
+            //         <th>Phone 2</th>
+            //     </tr>
+            // `;
+            // comparisonBody.innerHTML += headerRow;
+
+            // รายการคุณสมบัติที่จะแสดงในตาราง
+            let features = ['image', 'name', 'ram', 'price', 'battery', 'screen', 'link'];
+
+            features.forEach(feature => {
+                let row = `<tr><td>${feature.charAt(0).toUpperCase() + feature.slice(1)}</td>`;  // ชื่อคุณสมบัติ (เช่น "Name", "Price", "Battery")
+                comparisonPhones.forEach(phone => {
+                    row += feature === 'image' 
+                        ? `<td><img src="${phone.image}" class="product-img" alt="${phone.name}"></td>`
+                        : feature === 'link'
+                            ? `<td><a href="${phone.link}" target="_blank" class="btn btn-primary btn-sm">View Details</a></td>`
+                            : `<td>${phone[feature]}</td>`;
+                });
+                row += '</tr>';
+                comparisonBody.innerHTML += row;
+            });
+        }
+
+        function removeComparison() {
+            comparisonPhones = [];
+            updateComparisonTable();
+        }
+
+        // ฟังก์ชันค้นหาสมาร์ตโฟน
+        document.getElementById('searchBox').addEventListener('input', searchPhones);
+
+        function searchPhones() {
+            let query = document.getElementById('searchBox').value.toLowerCase();
+            let resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = '';
+
+            let filteredPhones = phones.filter(phone => 
+                phone.name.toLowerCase().includes(query) || 
+                phone.ram.toLowerCase().includes(query) ||
+                phone.price.toString().includes(query)
+            );
+
+            filteredPhones.forEach(phone => {
+                let card = document.createElement('div');
+                card.classList.add('col-md-4');
+                card.innerHTML = `
+                    <div class="card mb-3">
+                        <img src="${phone.image}" class="product-img mb-2" alt="${phone.name}">
+                        <h5>${phone.name}</h5>
+                        <p><strong>Ram:</strong> ${phone.ram}</p>
+                        <p><strong>Price:</strong> ${phone.price}</p>
+                        <button class="btn btn-primary btn-sm" onclick="comparePhone('${phone.name}', '${phone.ram}', '${phone.price}', '${phone.image}', '${phone.link}', '${phone.battery}', '${phone.screen}')">Compare</button>
+                    </div>
+                `;
+                resultsContainer.appendChild(card);
+            });
+
+            // ถ้าไม่มีผลลัพธ์ให้แสดงข้อความ
+            if (filteredPhones.length === 0) {
+                resultsContainer.innerHTML = '<p>No results found.</p>';
+            }
+        }
+
+        // เรียกใช้ฟังก์ชันในการแสดงสมาร์ตโฟนตอนโหลดหน้า
+        displayPhones();
+    </script>
+     <!-- footer section -->
+  <footer class="footer_section">
+    <div class="container">
+      <div class="row">
+        <!-- <div class="col-md-4 footer-col"> -->
+          <!-- <div class="footer_contact">
+            <h4>
+              Contact Us
+            </h4>
+            <div class="contact_link_box">
+              <a href="">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                <span>
+                  Location
+                </span>
+              </a>
+              <a href="">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+                <span>
+                  Call +01 1234567890
+                </span>
+              </a>
+              <a href="">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <span>
+                  demo@gmail.com
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>-->
+        
+        <!-- <div class="col-md-4 footer-col">
+          <div class="footer_detail">
+            <a href="" class="footer-logo">
+              Feane
+            </a>
+            <p>
+              Necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with
+            </p> 
+            <div class="footer_social">
+              <a href="">
+                <i class="fa fa-facebook" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fa fa-twitter" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fa fa-linkedin" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fa fa-instagram" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fa fa-pinterest" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </div> -->
+        <!-- <div class="col-md-4 footer-col">
+          <h4>
+            Opening Hours
+          </h4>
+          <p>
+            Everyday
+          </p>
+          <p>
+            10.00 Am -10.00 Pm
+          </p>
+        </div> -->
+      </div>
+      <div class="footer-info">
+        <p>
+          &copy; <span id="displayYear"></span> เว็ปไซต์นี้จัดทำขึ้นเพื่อนำเสนอโครงงาน
+          <a href="https://www.technicpak.ac.th/"  target="_blank">ของวิทยาลัยเทคนิคปักธงชัยเท่านั้น
+          </a><br><br>
+          &copy; <span id="displayYear"></span> ข้อมูลผู้จัดทำ
+          <a href="about.html" target="_blank">กดตรงนี้ !!!</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+  <!-- footer section -->
+
+  <!-- jQery -->
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <!-- popper js -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <!-- bootstrap js -->
+  <script src="js/bootstrap.js"></script>
+  <!-- owl slider -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+  </script>
+  <!-- isotope js -->
+  <script src="https://unpkg.com/isotope-layout@3.0.4/dist/isotope.pkgd.min.js"></script>
+  <!-- nice select -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
+  <!-- custom js -->
+  <script src="js/custom.js"></script>
+  <!-- Google Map -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
+  </script>
+  <!-- End Google Map -->
+    
+</body>
+</html>
